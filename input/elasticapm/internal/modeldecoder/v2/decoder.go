@@ -1346,12 +1346,21 @@ func mapToTransactionModel(from *transaction, event *modelpb.APMEvent) {
 		out.Id = from.ID.Val
 	}
 	if from.Marks.IsSet() {
-		out.Marks = make(map[string]*modelpb.TransactionMark, len(from.Marks.Events))
+		out.Marks = make([]*modelpb.TransactionMark, len(from.Marks.Events))
 		for event, val := range from.Marks.Events {
 			if len(val.Measurements) > 0 {
-				out.Marks[event] = &modelpb.TransactionMark{
-					Measurements: val.Measurements,
+				measurements := make([]*modelpb.Measurement, len(val.Measurements))
+				for k, v := range val.Measurements {
+					measurements = append(measurements, &modelpb.Measurement{
+						Key:   k,
+						Value: v,
+					})
 				}
+
+				out.Marks = append(out.Marks, &modelpb.TransactionMark{
+					Key:          event,
+					Measurements: measurements,
+				})
 			}
 		}
 	}

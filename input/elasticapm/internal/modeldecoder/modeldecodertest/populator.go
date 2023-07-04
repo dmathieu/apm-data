@@ -27,6 +27,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	"github.com/elastic/apm-data/input/elasticapm/internal/modeldecoder/nullable"
 	"github.com/elastic/apm-data/model/modelpb"
@@ -331,7 +332,7 @@ func AssertStructValues(t *testing.T, i interface{}, isException func(string) bo
 			}
 			panic(fmt.Sprintf("unhandled type %s %s for key %s", f.Kind(), f.Type(), key))
 		}
-		assert.Equal(t, newVal, fVal, key)
+		require.Equal(t, newVal, fVal, key)
 	})
 }
 

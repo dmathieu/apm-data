@@ -101,42 +101,120 @@ func TestDecodeNestedTransaction(t *testing.T) {
 		dec := decoder.NewJSONDecoder(strings.NewReader(str))
 		var batch modelpb.Batch
 		require.NoError(t, DecodeNestedTransaction(dec, &input, &batch))
-		marks := map[string]*modelpb.TransactionMark{
-			"agent": {
-				Measurements: map[string]float64{
-					"domComplete":                0.1,
-					"domInteractive":             0.2,
-					"domContentLoadedEventStart": 0.3,
-					"domContentLoadedEventEnd":   0.4,
-					"timeToFirstByte":            0.5,
-					"firstContentfulPaint":       0.6,
-					"largestContentfulPaint":     0.7,
-					"long":                       0.8,
+		marks := []*modelpb.TransactionMark{
+			{
+				Key: "agent",
+				Measurements: []*modelpb.Measurement{
+					{
+						Key:   "domComplete",
+						Value: 0.1,
+					},
+					{
+						Key:   "domInteractive",
+						Value: 0.2,
+					},
+					{
+						Key:   "domContentLoadedEventStart",
+						Value: 0.3,
+					},
+					{
+						Key:   "domContentLoadedEventEnd",
+						Value: 0.4,
+					},
+					{
+						Key:   "timeToFirstByte",
+						Value: 0.5,
+					},
+					{
+						Key:   "firstContentfulPaint",
+						Value: 0.6,
+					},
+					{
+						Key:   "largestContentfulPaint",
+						Value: 0.7,
+					},
+					{
+						Key:   "long",
+						Value: 0.8,
+					},
 				},
 			},
-			"navigationTiming": {
-				Measurements: map[string]float64{
-					"fetchStart":                 0.1,
-					"domainLookupStart":          0.2,
-					"domainLookupEnd":            0.3,
-					"connectStart":               0.4,
-					"connectEnd":                 0.5,
-					"requestStart":               0.6,
-					"responseStart":              0.7,
-					"responseEnd":                0.8,
-					"domLoading":                 0.9,
-					"domInteractive":             0.11,
-					"domContentLoadedEventStart": 0.21,
-					"domContentLoadedEventEnd":   0.31,
-					"domComplete":                0.41,
-					"loadEventStart":             0.51,
-					"loadEventEnd":               6,
-					"long":                       0.99,
+			{
+				Key: "navigationTiming",
+				Measurements: []*modelpb.Measurement{
+					{
+						Key:   "fetchStart",
+						Value: 0.1,
+					},
+					{
+						Key:   "domainLookupStart",
+						Value: 0.2,
+					},
+					{
+						Key:   "domainLookupEnd",
+						Value: 0.3,
+					},
+					{
+						Key:   "connectStart",
+						Value: 0.4,
+					},
+					{
+						Key:   "connectEnd",
+						Value: 0.5,
+					},
+					{
+						Key:   "requestStart",
+						Value: 0.6,
+					},
+					{
+						Key:   "responseStart",
+						Value: 0.7,
+					},
+					{
+						Key:   "responseEnd",
+						Value: 0.8,
+					},
+					{
+						Key:   "domLoading",
+						Value: 0.9,
+					},
+					{
+						Key:   "domInteractive",
+						Value: 0.11,
+					},
+					{
+						Key:   "domContentLoadedEventStart",
+						Value: 0.21,
+					},
+					{
+						Key:   "domContentLoadedEventEnd",
+						Value: 0.31,
+					},
+					{
+						Key:   "domComplete",
+						Value: 0.41,
+					},
+					{
+						Key:   "loadEventStart",
+						Value: 0.51,
+					},
+					{
+						Key:   "loadEventEnd",
+						Value: 6,
+					},
+					{
+						Key:   "long",
+						Value: 0.99,
+					},
 				},
 			},
-			"long": {
-				Measurements: map[string]float64{
-					"long": 0.1,
+			{
+				Key: "long",
+				Measurements: []*modelpb.Measurement{
+					{
+						Key:   "long",
+						Value: 0.1,
+					},
 				},
 			},
 		}

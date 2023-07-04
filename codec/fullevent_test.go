@@ -143,10 +143,14 @@ func fullEvent(t *testing.B) *modelpb.APMEvent {
 			},
 			// TODO investigat valid values
 			Custom: nil,
-			Marks: map[string]*modelpb.TransactionMark{
-				"foo": {
-					Measurements: map[string]float64{
-						"bar": 3,
+			Marks: []*modelpb.TransactionMark{
+				{
+					Key: "foo",
+					Measurements: []*modelpb.Measurement{
+						{
+							Key:   "bar",
+							Value: 3,
+						},
 					},
 				},
 			},

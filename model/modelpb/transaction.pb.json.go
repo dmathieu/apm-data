@@ -38,12 +38,12 @@ func (e *Transaction) toModelJSON(out *modeljson.Transaction, metricset bool) {
 
 	if n := len(e.Marks); n > 0 {
 		marks := make(map[string]map[string]float64, n)
-		for k, mark := range e.Marks {
+		for _, mark := range e.Marks {
 			sanitizedMark := make(map[string]float64, len(mark.Measurements))
-			for k, v := range mark.Measurements {
-				sanitizedMark[sanitizeLabelKey(k)] = v
+			for _, v := range mark.Measurements {
+				sanitizedMark[sanitizeLabelKey(v.Key)] = v.Value
 			}
-			marks[sanitizeLabelKey(k)] = sanitizedMark
+			marks[sanitizeLabelKey(mark.Key)] = sanitizedMark
 		}
 		out.Marks = marks
 	}
